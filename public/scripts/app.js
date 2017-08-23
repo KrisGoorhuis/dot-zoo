@@ -19,11 +19,8 @@ $(document).ready(function() {
    function generateAnimals() { 
       for (var i = 0; i < animalCount; i++) {
          
-         var x = Math.floor(Math.random() * (canvasWidth) + 1);
-         var y = Math.floor(Math.random() * (canvasWidth) + 1);
-
-         animalArray.push(new Animal(x, y));
-         
+         animalArray.push(new Animal(canvasWidth, canvasHeight));
+         console.log(animalArray);
       }
    }
   
@@ -51,16 +48,16 @@ $(document).ready(function() {
             var radius = animalArray[i].radius;
             
             var travelIncrementX = ((animalArray[i].vectorX) / 1000) * animalArray[i].movementSpeed;
-            var travelIncrementY = ((animalArray[i].vectorX) / 1000) * animalArray[i].movementSpeed;
+            var travelIncrementY = ((animalArray[i].vectorY) / 1000) * animalArray[i].movementSpeed;
             
             
             if (animalArray[i].travelTimeRemaining > 0) {
                animalArray[i].travelTimeRemaining --;
                
-               if (currentX - travelIncrementX - radius > 0 && currentX + travelIncrementX + radius < canvas.width) {
+               if (currentX + travelIncrementX - radius > 0 && currentX + travelIncrementX + radius < canvas.width) {
                    animalArray[i].x += travelIncrementX;
                }
-               if (currentY - travelIncrementY - radius > 0 && currentY + travelIncrementY + radius < canvas.height) {
+               if (currentY + travelIncrementY - radius > 0 && currentY + travelIncrementY + radius < canvas.height) {
                   animalArray[i].y += travelIncrementY;
                }        
                
@@ -70,6 +67,10 @@ $(document).ready(function() {
       }
 
       // New movements every couple seconds
+      animalArray[i].vectorX = newVector();
+      animalArray[i].vectorY = newVector();
+      animalArray[i].travelTimeRemaining = Math.floor(Math.random() * 400)+100;
+      moveAlongVector();
       setInterval(function() {
          animalArray[i].vectorX = newVector();
          animalArray[i].vectorY = newVector();
