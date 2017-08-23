@@ -1,0 +1,19 @@
+{
+    "globals": {
+        "$": true,
+       "i": true,
+       "j": true,
+       "console": true,
+       "document": true,
+       "__dirname": true,
+       "process": true,
+       "require": true,
+       "angular": true,
+       "module": true,
+       "setInterval": true,
+       "setTimeout": true,
+       "clearInterval": true,
+       
+       "Animal": true
+    }
+}
