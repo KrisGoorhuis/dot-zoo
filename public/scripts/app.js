@@ -11,7 +11,7 @@ $(document).ready(function() {
    var context = canvas.getContext("2d");
    
    var animalArray = [];
-   var animalCount = 10;
+   var animalCount = 5;
    
 
 
