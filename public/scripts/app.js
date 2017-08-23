@@ -11,16 +11,14 @@ $(document).ready(function() {
    var context = canvas.getContext("2d");
    
    var animalArray = [];
-   var animalCount = 5;
+   var animalCount = 10;
    
 
 
 
    function generateAnimals() { 
-      for (var i = 0; i < animalCount; i++) {
-         
+      for (var i = 0; i < animalCount; i++) {        
          animalArray.push(new Animal(canvasWidth, canvasHeight));
-         console.log(animalArray);
       }
    }
   
@@ -66,17 +64,22 @@ $(document).ready(function() {
          }, 1);      
       }
 
+      
+      // Smoother start:
+      setTimeout(function() {
+         animalArray[i].vectorX = newVector();
+         animalArray[i].vectorY = newVector();
+         animalArray[i].travelTimeRemaining = Math.floor(Math.random() * 400)+100;
+         moveAlongVector();
+      }, (Math.random() * 2000));
+     
       // New movements every couple seconds
-      animalArray[i].vectorX = newVector();
-      animalArray[i].vectorY = newVector();
-      animalArray[i].travelTimeRemaining = Math.floor(Math.random() * 400)+100;
-      moveAlongVector();
       setInterval(function() {
          animalArray[i].vectorX = newVector();
          animalArray[i].vectorY = newVector();
          animalArray[i].travelTimeRemaining = Math.floor(Math.random() * 400)+100;
          moveAlongVector();
-      }, animalArray[i].movementFrequency + (Math.random() * 1000) + 500 );
+      }, animalArray[i].movementFrequency + (Math.random() * 2000) + 500 );
    }
    
       
