@@ -34,19 +34,23 @@ $(document).ready(function() {
    
    
    function startAnimalAmbulating(i) {  
+      var maxTravelTime = 500;
+      var travelSpeedDivisor = 100;
+      var movementUpdateRate = 5;
+      var movementFrequencyBase = (Math.random() * 2000) + 500; 
           
       function newVector() {
-         return Math.floor(((Math.random() * 100) - 50) + 1);
+         return (Math.random() * 10) - 5;
       }
 
       function moveAlongVector() {
          setTimeout(function() {
-            var currentX = animalArray[i].x; // In the interest of making if statements more intelligile
+            var currentX = animalArray[i].x; // In the interest of making if statements more intelligible
             var currentY = animalArray[i].y;
             var radius = animalArray[i].radius;
             
-            var travelIncrementX = ((animalArray[i].vectorX) / 1000) * animalArray[i].movementSpeed;
-            var travelIncrementY = ((animalArray[i].vectorY) / 1000) * animalArray[i].movementSpeed;
+            var travelIncrementX = ((animalArray[i].vectorX) / travelSpeedDivisor) * animalArray[i].movementSpeed; // 1000 here was abitrarily chosen from testing
+            var travelIncrementY = ((animalArray[i].vectorY) / travelSpeedDivisor) * animalArray[i].movementSpeed;
             
             
             if (animalArray[i].travelTimeRemaining > 0) {
@@ -61,7 +65,7 @@ $(document).ready(function() {
                
                moveAlongVector();
             } 
-         }, 1);      
+         }, movementUpdateRate);      
       }
 
       
@@ -69,7 +73,7 @@ $(document).ready(function() {
       setTimeout(function() {
          animalArray[i].vectorX = newVector();
          animalArray[i].vectorY = newVector();
-         animalArray[i].travelTimeRemaining = Math.floor(Math.random() * 400)+100;
+         animalArray[i].travelTimeRemaining = Math.floor(Math.random() * maxTravelTime);
          moveAlongVector();
       }, (Math.random() * 2000));
      
@@ -77,9 +81,9 @@ $(document).ready(function() {
       setInterval(function() {
          animalArray[i].vectorX = newVector();
          animalArray[i].vectorY = newVector();
-         animalArray[i].travelTimeRemaining = Math.floor(Math.random() * 400)+100;
+         animalArray[i].travelTimeRemaining = Math.floor(Math.random() * maxTravelTime);
          moveAlongVector();
-      }, animalArray[i].movementFrequency + (Math.random() * 2000) + 500 );
+      }, animalArray[i].movementFrequency + movementFrequencyBase);
    }
    
       
