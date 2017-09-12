@@ -11,16 +11,18 @@ $(document).ready(function() {
    var context = canvas.getContext("2d");
    
    var animalArray = [];
-   var animalCount = 5;
+   var animalCount = 7;
 
    function returnRandomAnimal() {
       var animalCreators = [
-         new Cat(canvasWidth, canvasHeight),
-         new Animal(canvasWidth, canvasHeight)
+         new ChocolateBear(canvasWidth, canvasHeight),
+         new BlackBear(canvasWidth, canvasHeight),
+         new OrangeCat(canvasWidth, canvasHeight),
+         new RussianBlueCat(canvasWidth, canvasHeight),
+         new CalicoCat(canvasWidth, canvasHeight)
       ];
       var randomIndex = Math.floor(Math.random() * animalCreators.length);
-      var randomAnimal = animalCreators[randomIndex];
-      var newThing = animalCreators[randomIndex];      
+      var randomAnimal = animalCreators[randomIndex];    
       return randomAnimal;
       
    }
@@ -30,6 +32,7 @@ $(document).ready(function() {
       for (var i = 0; i < animalCount; i++) {        
          animalArray.push(returnRandomAnimal());
       }
+      console.log(animalArray);
    }
   
    function drawAnimals() {
@@ -41,7 +44,13 @@ $(document).ready(function() {
       
    
    function drawCycle() {
+      // Essentially clearRect(), but with color!
+      context.beginPath();
       context.clearRect(0, 0, canvas.width, canvas.height);  
+      context.rect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "#befc8d";
+      context.fill();
+      context.closePath();
       drawAnimals();
    }
    

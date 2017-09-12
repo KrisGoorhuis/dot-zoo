@@ -2,7 +2,7 @@ function Animal(canvasWidth, canvasHeight) {
    
    this.radius = 10; 
    this.color = "#F5004A";
-   this.earColor = "#D2691E";
+   this.earColor = "#F5004A";
    this.earOffset = 7;
    this.vectorX = 0;
    this.vectorY = 0;
@@ -10,31 +10,16 @@ function Animal(canvasWidth, canvasHeight) {
    this.movementSpeed = 7; 
    this.x = Math.floor(Math.random() * ((canvasWidth - this.radius) - this.radius) + this.radius);
    this.y = Math.floor(Math.random() * ((canvasHeight - this.radius) - this.radius) + this.radius);
-   
-   
-   
+     
    this.drawBody = function(context) {
       context.beginPath();
       context.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
       context.fillStyle = this.color;
       context.fill();
-      context.closePath();         
-   };
-   
-   this.drawEars = function(context) {
-      // left ear
-      context.beginPath();
-      context.arc(this.x - this.earOffset, this.y - this.earOffset, 3, 0.55*Math.PI, 0.05*Math.PI, false);
-      context.strokeColor = this.earColor;
-      context.stroke();
-      context.closePath();
-      
-      // right ear
-      context.beginPath();
-      context.arc(this.x + this.earOffset, this.y - this.earOffset, 3, 0.95*Math.PI, 0.25*Math.PI, false);
-      context.strokeStyle = this.earColor;
-      context.stroke();
-      context.closePath();
+      context.closePath();     
+      if (this.additionalBodyDraw) {
+         this.additionalBodyDraw(context);
+      }
    };
    
    this.startAmbulating = function(self, canvas) {
@@ -92,31 +77,107 @@ function Animal(canvasWidth, canvasHeight) {
    
 }
 
-function Cat(canvasWidth, canvasHeight) {
-
+function Bear(canvasWidth, canvasHeight) {
    Animal.call(this, canvasWidth, canvasHeight);
-   this.color = "#F5AA4A";
    this.drawEars = function(context) {
+      context.lineWidth = 3;
+      
+      // left ear
+      context.beginPath();
+      context.arc(this.x - this.earOffset, this.y - this.earOffset, this.earRadius, 0.55*Math.PI, 0.05*Math.PI, false);
+      context.strokeStyle = this.earColor;
+      context.stroke();
+      context.closePath();
+      
+      // right ear
+      context.beginPath();
+      context.arc(this.x + this.earOffset, this.y - this.earOffset, this.earRadius, 0.90*Math.PI, 0.45*Math.PI, false);
+      context.strokeStyle = this.earColor;
+      context.stroke();
+      context.closePath();
+   };
+   this.radius = 15;
+   this.earOffset = 10;
+   this.earRadius = 5;
+   
+}
+
+function ChocolateBear(canvasWidth, canvasHeight) {
+   Bear.call(this, canvasWidth, canvasHeight);
+   this.color = "#D2691E";
+   this.earColor = "#D2691E";
+}
+
+function BlackBear(canvasWidth, canvasHeight) {
+   Bear.call(this, canvasWidth, canvasHeight);
+   this.color = "#000000";
+   this.earColor = "#000000";
+}
+
+
+
+function Cat(canvasWidth, canvasHeight) {
+   Animal.call(this, canvasWidth, canvasHeight);
+   this.drawEars = function(context) {
+      context.lineWidth = 2;
+      
       // left ear
       context.beginPath();
       context.moveTo(this.x - this.earOffset - 2, this.y - this.earOffset + 3);
       context.lineTo((this.x - this.earOffset - 3), (this.y - this.earOffset - 4));
-      context.strokeColor = this.earColor;
+      context.strokeStyle = this.earColor;
       context.stroke();
       context.lineTo((this.x - this.earOffset) + 3, (this.y - this.earOffset - 2));
-      context.stroke();
-      
+      context.stroke();   
+      context.closePath();
       
       // right ear
       context.beginPath();
       context.moveTo(this.x + this.earOffset + 2, this.y - this.earOffset + 3);
       context.lineTo((this.x + this.earOffset + 3), (this.y - this.earOffset - 4));
-      context.strokeColor = this.earColor;
+      context.strokeStyle = this.earColor;
       context.stroke();
       context.lineTo((this.x + this.earOffset) - 3, (this.y - this.earOffset - 2));
       context.stroke();
+      context.closePath();
    };
 }
 
+function OrangeCat(canvasWidth, canvasHeight) {
+   Cat.call(this, canvasWidth, canvasHeight);
+   this.color = "#FFA500";
+   this.earColor = "#FFA500";
+}
 
+function RussianBlueCat(canvasWidth, canvasHeight) {
+   Cat.call(this, canvasWidth, canvasHeight);
+   this.color = "#94a9b7";
+   this.earColor = "#94a9b7";
+}
 
+function CalicoCat(canvasWidth, canvasHeight) {
+   Cat.call(this, canvasWidth, canvasHeight);
+   this.color = "#ffffff";
+   this.earColor = "#ffffff";
+   function spotOffset() {
+      return (Math.random() * 10) - 5;
+   }
+   this.blackSpotXOffset = spotOffset();
+   this.blackSpotYOffset = spotOffset();
+   this.orangeSpotXOffset = spotOffset();
+   this.orangeSpotYOffset = spotOffset();
+   
+   this.additionalBodyDraw = function(context) {
+      context.beginPath();
+      context.arc(this.x + this.blackSpotXOffset, this.y + this.blackSpotYOffset, 3, 0, 2*Math.PI, false);
+      context.fillStyle = "#1e1e1e";
+      context.fill();
+      context.closePath();
+      
+      context.beginPath();
+      context.arc(this.x + this.orangeSpotXOffset, this.y + this.orangeSpotYOffset, 3, 0, 2*Math.PI, false);
+      context.fillStyle = "#FFA500";
+      context.fill();
+      context.closePath();
+   };
+}
