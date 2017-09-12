@@ -12,80 +12,32 @@ $(document).ready(function() {
    
    var animalArray = [];
    var animalCount = 5;
-   
 
-
+   function returnRandomAnimal() {
+      var animalCreators = [
+         new Cat(canvasWidth, canvasHeight),
+         new Animal(canvasWidth, canvasHeight)
+      ];
+      var randomIndex = Math.floor(Math.random() * animalCreators.length);
+      var randomAnimal = animalCreators[randomIndex];
+      var newThing = animalCreators[randomIndex];      
+      return randomAnimal;
+      
+   }
+   returnRandomAnimal();
 
    function generateAnimals() { 
       for (var i = 0; i < animalCount; i++) {        
-         animalArray.push(new Animal(canvasWidth, canvasHeight));
+         animalArray.push(returnRandomAnimal());
       }
    }
   
    function drawAnimals() {
       for (var i = 0; i < animalArray.length; i++) {
-         context.beginPath();
-         context.arc(animalArray[i].x, animalArray[i].y, animalArray[i].radius, 0, Math.PI*2, false);
-         context.fillStyle = "#F5004A";
-         context.fill();
-         context.closePath();         
+         animalArray[i].drawBody(context); 
+         animalArray[i].drawEars(context);
       }
    }
-   
-   
-   function startAnimalAmbulating(i) {  
-      var maxTravelTime = 500;
-      var travelSpeedDivisor = 100;
-      var movementUpdateRate = 5;
-      var movementFrequencyBase = (Math.random() * 2000) + 500; 
-          
-      function newVector() {
-         return (Math.random() * 10) - 5;
-      }
-
-      function moveAlongVector() {
-         setTimeout(function() {
-            var currentX = animalArray[i].x; // In the interest of making if statements more intelligible
-            var currentY = animalArray[i].y;
-            var radius = animalArray[i].radius;
-            
-            var travelIncrementX = ((animalArray[i].vectorX) / travelSpeedDivisor) * animalArray[i].movementSpeed; // 1000 here was abitrarily chosen from testing
-            var travelIncrementY = ((animalArray[i].vectorY) / travelSpeedDivisor) * animalArray[i].movementSpeed;
-            
-            
-            if (animalArray[i].travelTimeRemaining > 0) {
-               animalArray[i].travelTimeRemaining --;
-               
-               if (currentX + travelIncrementX - radius > 0 && currentX + travelIncrementX + radius < canvas.width) {
-                   animalArray[i].x += travelIncrementX;
-               }
-               if (currentY + travelIncrementY - radius > 0 && currentY + travelIncrementY + radius < canvas.height) {
-                  animalArray[i].y += travelIncrementY;
-               }        
-               
-               moveAlongVector();
-            } 
-         }, movementUpdateRate);      
-      }
-
-      
-      // Smoother start:
-      setTimeout(function() {
-         animalArray[i].vectorX = newVector();
-         animalArray[i].vectorY = newVector();
-         animalArray[i].travelTimeRemaining = Math.floor(Math.random() * maxTravelTime);
-         moveAlongVector();
-      }, (Math.random() * 2000));
-     
-      // New movements every couple seconds
-      setInterval(function() {
-         animalArray[i].vectorX = newVector();
-         animalArray[i].vectorY = newVector();
-         animalArray[i].travelTimeRemaining = Math.floor(Math.random() * maxTravelTime);
-         moveAlongVector();
-      }, animalArray[i].movementFrequency + movementFrequencyBase);
-   }
-   
       
    
    function drawCycle() {
@@ -96,7 +48,7 @@ $(document).ready(function() {
    
    generateAnimals();
    for (var i = 0; i < animalArray.length; i++) {
-      startAnimalAmbulating(i);
+      animalArray[i].startAmbulating(animalArray[i], canvas);
    }
    
    var drawCycleInterval = setInterval(function() {
