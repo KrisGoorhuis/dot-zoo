@@ -41,7 +41,6 @@ $(document).ready(function() {
          animalArray[i].drawEars(context);
       }
    }
-      
    
    function drawCycle() {
       // Essentially clearRect(), but with color!
@@ -54,7 +53,6 @@ $(document).ready(function() {
       drawAnimals();
    }
    
-   
    generateAnimals();
    for (var i = 0; i < animalArray.length; i++) {
       animalArray[i].startAmbulating(animalArray[i], canvas);
@@ -64,5 +62,4 @@ $(document).ready(function() {
       
       drawCycle();
    }, framerate);
-   
 });

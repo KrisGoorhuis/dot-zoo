@@ -7,14 +7,14 @@ body {
    display: flex;
    justify-content: center;
    margin-top: 50px;
-   font-family: 'Pangolin';
+   font-family: 'arial';
 }
 
 .side-divs {
-   width: 150px;
+   width: 250px;
    margin: 1px;
    padding-top: 10px;
-   text-align: right;
+   text-align: left;
    color: rgb(55, 91, 46);
 }
 
@@ -25,7 +25,7 @@ body {
 }
 
 .side-divs p {
-   margin: 0px;
+   margin: 5px;
 }
 
 .score-number {
@@ -50,6 +50,11 @@ canvas {
    flex-direction: column;
    justify-content: center;
    align-items: center;
+}
+
+h2 {
+   margin-left: 10px;
+   font-size: 20px;
 }
 
 .menu-screen h2 {
